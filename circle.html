@@ -1,36 +1,422 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#fff2f8">
 <title>XX♀ Circle | XXFem</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<style>
+:root{--circle-max:1180px}
+.circle-page{background:linear-gradient(145deg,#fff9fc,#ffe4ef 52%,#f5bfd5);min-height:100vh}
+.circle-shell{display:block;min-height:100vh;padding:112px 18px 60px;width:min(var(--circle-max),100%);margin:auto}
+.circle-auth{width:min(720px,100%);margin:30px auto;background:rgba(255,250,248,.94);padding:46px;border-radius:32px;box-shadow:var(--shadow);text-align:center;border:1px solid #fff}
+.circle-auth .circle-logo{font-size:78px}
+.circle-auth h1{font:700 clamp(42px,7vw,62px)/.95 "Cormorant Garamond",serif;margin:16px 0;color:var(--wine)}
+.circle-auth p{color:var(--muted);line-height:1.7}
+.circle-dashboard[hidden],.circle-auth[hidden]{display:none!important}
+.circle-welcome{display:flex;justify-content:space-between;align-items:center;gap:24px;background:rgba(255,250,248,.9);border:1px solid #fff;border-radius:28px;padding:28px;box-shadow:var(--shadow)}
+.circle-welcome h1{font:700 clamp(43px,6vw,68px)/.88 "Cormorant Garamond",serif;margin:8px 0;color:var(--wine);letter-spacing:-.035em}
+.circle-welcome h1 em{color:var(--hot)}
+.circle-welcome p{color:var(--muted);line-height:1.6;margin:0;max-width:680px}
+.member-chip{display:flex;align-items:center;gap:12px;background:var(--powder);border:1px solid var(--line);padding:12px 15px;border-radius:18px;min-width:220px}
+.member-avatar{width:48px;height:48px;flex:0 0 48px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--hot),var(--berry));color:#fff;font-weight:800}
+.member-chip strong,.member-chip small{display:block}.member-chip small{color:var(--muted);font-size:11px;margin-top:3px}
+.circle-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:22px;margin-top:22px}
+.circle-panel{background:rgba(255,250,248,.94);border:1px solid #fff;border-radius:25px;padding:22px;box-shadow:0 18px 50px rgba(104,20,56,.08)}
+.circle-panel h2,.circle-panel h3{font-family:"Cormorant Garamond",serif;color:var(--wine);margin:0 0 14px}
+.circle-panel h2{font-size:35px}.circle-panel h3{font-size:28px}
+.circle-compose textarea,.circle-comment textarea,.circle-join input,.circle-join textarea{width:100%;border:1px solid var(--line);border-radius:15px;background:#fff;padding:14px;color:var(--ink);outline:none}
+.circle-compose textarea:focus,.circle-comment textarea:focus,.circle-join input:focus,.circle-join textarea:focus{outline:3px solid #76244b;outline-offset:2px}
+.compose-bottom{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:10px}
+.circle-status{min-height:20px;color:var(--muted);font-size:12px;margin-top:9px}
+.circle-feed-title{font:700 38px/1 "Cormorant Garamond",serif;color:var(--wine);margin:28px 4px 13px}
+.circle-feed{display:grid;gap:15px}
+.circle-post{background:#fff;border:1px solid var(--line);border-radius:21px;padding:20px;box-shadow:0 12px 32px rgba(104,20,56,.05)}
+.post-head{display:flex;gap:11px;align-items:center}.post-head .member-avatar{width:42px;height:42px;flex-basis:42px;font-size:14px}
+.post-head strong,.post-head small{display:block}.post-head small{color:var(--muted);font-size:11px;margin-top:2px}
+.post-copy{white-space:pre-wrap;line-height:1.7;color:#553746;margin:16px 0}
+.post-tools{display:flex;gap:14px}.text-action{border:0;background:transparent;color:var(--hot);font-weight:700;padding:4px 0;cursor:pointer}
+.circle-comments{border-top:1px solid #f2dbe5;margin-top:13px;padding-top:13px;display:grid;gap:9px}
+.circle-comment-item{background:var(--powder);border-radius:13px;padding:10px 12px;font-size:13px;line-height:1.5}
+.circle-comment-item strong{color:var(--berry)}.circle-comment-item small{color:var(--muted)}
+.circle-comment{display:flex;gap:8px;margin-top:5px}.circle-comment textarea{min-height:46px;resize:vertical}.circle-comment .btn{align-self:flex-end}
+.circle-side-list{display:grid;gap:10px}.circle-side-item{background:var(--powder);border:1px solid var(--line);padding:14px;border-radius:15px}
+.circle-side-item strong,.circle-side-item small{display:block}.circle-side-item small{color:var(--muted);line-height:1.5;margin-top:4px}
+.circle-admin-app{background:#fff;border:1px solid var(--line);border-radius:15px;padding:13px;display:grid;gap:7px}.circle-admin-app p{font-size:12px;line-height:1.5;color:var(--muted);margin:0}.admin-buttons{display:flex;gap:7px}
+.circle-notice{background:#fff4f8;border-left:4px solid var(--hot);padding:13px 14px;border-radius:10px;color:#654451;text-align:left;font-size:13px;line-height:1.55}
+.circle-join{text-align:left}.circle-join label{display:grid;gap:7px;margin:14px 0;font-size:12px;font-weight:700;color:var(--wine)}
+.circle-empty{text-align:center;color:var(--muted);padding:30px}
+.circle-signout{border:0;background:none;font:inherit;cursor:pointer}
+@media(max-width:850px){.circle-grid{grid-template-columns:1fr}.circle-welcome{flex-direction:column;align-items:flex-start}.member-chip{width:100%}.circle-sidebar{order:-1}}
+@media(max-width:650px){.circle-shell{padding:92px 9px 40px}.circle-auth,.circle-panel,.circle-welcome{padding:18px;border-radius:19px}.circle-auth{padding:30px 20px}.circle-comment,.compose-bottom{flex-direction:column;align-items:stretch}.circle-comment .btn{align-self:stretch}.admin-buttons{flex-direction:column}.circle-welcome h1{font-size:46px}.circle-panel h2{font-size:31px}}
+</style>
 </head>
 <body class="circle-page">
 <a class="skip" href="#circle-main">Skip to main content</a>
-<header class="topbar"><a class="brand" href="index.html"><span class="crown">♛</span><span>XX♀</span></a><nav class="simple-nav"><a href="index.html">Back to XXFem</a></nav></header>
+<header class="topbar">
+  <a class="brand" href="index.html"><span class="crown">♛</span><span>XX♀</span></a>
+  <nav class="simple-nav">
+    <a href="index.html">Back to XXFem</a>
+    <button id="logoutBtn" class="circle-signout" type="button" hidden>Sign Out</button>
+  </nav>
+</header>
+
 <main id="circle-main" class="circle-shell">
-  <section class="circle-card">
+  <section id="loadingView" class="circle-auth">
+    <span class="circle-crown">♛</span>
+    <div class="circle-logo">XX♀</div>
+    <p class="kicker">XXFem Circle</p>
+    <h1>Opening the Circle.</h1>
+    <p id="loadingText">Checking your secure member session…</p>
+  </section>
+
+  <section id="loginView" class="circle-auth" hidden>
     <span class="circle-crown">♛</span>
     <div class="circle-logo">XX♀</div>
     <p class="kicker">XXFem Circle</p>
     <h1>A private space for women.</h1>
-    <p>XX♀ Circle is protected behind Cloudflare Access. Members sign in with Google or an email verification code. Membership is moderated separately from authentication.</p>
+    <p>Sign in through the protected XXFem Circle gateway. After authentication, return here and the Circle will recognize your member account.</p>
+    <a class="btn primary full" href="https://xxfem-circle-api.truewolfflix777.workers.dev/me">Secure Member Sign-In</a>
+    <p class="tiny">If the sign-in page shows your member JSON after authentication, simply return to this Circle tab and refresh.</p>
+  </section>
 
-    <div class="privacy-box">
-      <h2>How entry works</h2>
-      <ol>
-        <li>Sign in securely.</li>
-        <li>If you are already approved, your member record is recognized.</li>
-        <li>If you are new, your Circle application will be reviewed before private member content is available.</li>
-      </ol>
+  <section id="joinView" class="circle-auth" hidden>
+    <span class="circle-crown">♛</span>
+    <div class="circle-logo">XX♀</div>
+    <p class="kicker">Join XXFem Circle</p>
+    <h1>Apply for the private Circle.</h1>
+    <p class="circle-notice">Authentication confirms the account you control. Circle membership is separately reviewed before private posts become available.</p>
+    <form id="joinForm" class="circle-join">
+      <label>Display name
+        <input name="displayName" maxlength="80" required autocomplete="nickname">
+      </label>
+      <label>State or region
+        <input name="state" maxlength="80" autocomplete="address-level1">
+      </label>
+      <label>Short bio
+        <textarea name="bio" maxlength="1000" rows="5" placeholder="Tell us a little about yourself."></textarea>
+      </label>
+      <button class="btn primary full" type="submit">Submit Application</button>
+      <div id="joinStatus" class="circle-status" role="status" aria-live="polite"></div>
+    </form>
+  </section>
+
+  <section id="pendingView" class="circle-auth" hidden>
+    <span class="circle-crown">♛</span>
+    <div class="circle-logo">XX♀</div>
+    <p class="kicker">Application received</p>
+    <h1>Your application is pending.</h1>
+    <p>Circle memberships are reviewed before private feed access is granted. Come back to this page later to check your status.</p>
+    <a class="btn pale" href="index.html">Back to XXFem</a>
+  </section>
+
+  <section id="blockedView" class="circle-auth" hidden>
+    <span class="circle-crown">♛</span>
+    <div class="circle-logo">XX♀</div>
+    <p class="kicker">XXFem Circle</p>
+    <h1>We couldn't open the Circle.</h1>
+    <p id="blockedText">Your account cannot access the private Circle right now.</p>
+    <button id="retryBtn" class="btn primary" type="button">Try Again</button>
+  </section>
+
+  <section id="dashboardView" class="circle-dashboard" hidden>
+    <div class="circle-welcome">
+      <div>
+        <p class="kicker">Private Member Community</p>
+        <h1>Welcome to the <em>Circle.</em></h1>
+        <p>A protected place for approved members to talk, share and connect.</p>
+      </div>
+      <div class="member-chip">
+        <div id="memberAvatar" class="member-avatar">XX</div>
+        <div><strong id="memberName">Member</strong><small id="memberRole">Approved member</small></div>
+      </div>
     </div>
 
-    <a class="btn primary full" href="https://xxfem-circle-api.truewolfflix777.workers.dev/app">Enter XX♀ Circle</a>
-    <p class="tiny">Secure sign-in opens the private XX♀ Circle member dashboard. Approved members can read the feed, post, comment, and access member-only features.</p>
+    <div class="circle-grid">
+      <div>
+        <section class="circle-panel circle-compose" aria-labelledby="shareTitle">
+          <h2 id="shareTitle">Share with the Circle</h2>
+          <textarea id="postBody" maxlength="5000" rows="5" placeholder="What's on your mind?"></textarea>
+          <div class="compose-bottom">
+            <span class="tiny"><span id="postCount">0</span>/5000</span>
+            <button id="publishBtn" class="btn primary" type="button">Publish Post</button>
+          </div>
+          <div id="postStatus" class="circle-status" role="status" aria-live="polite"></div>
+        </section>
+
+        <h2 class="circle-feed-title">Circle Feed</h2>
+        <div id="feedStatus" class="circle-status" role="status" aria-live="polite">Loading private posts…</div>
+        <section id="feed" class="circle-feed" aria-label="Circle feed"></section>
+      </div>
+
+      <aside class="circle-sidebar">
+        <section class="circle-panel">
+          <h3>Your profile</h3>
+          <div class="circle-side-list">
+            <div class="circle-side-item"><strong id="profileName">Member</strong><small id="profileState">State hidden</small></div>
+            <div class="circle-side-item"><strong>Private by design</strong><small>Authentication and approved membership are required before the API returns Circle posts.</small></div>
+          </div>
+        </section>
+
+        <section id="adminPanel" class="circle-panel" hidden style="margin-top:18px">
+          <h3>Admin</h3>
+          <div id="adminStatus" class="circle-status" role="status" aria-live="polite"></div>
+          <div id="pendingApps" class="circle-side-list"></div>
+        </section>
+      </aside>
+    </div>
   </section>
 </main>
+
+<script>
+const API = "https://xxfem-circle-api.truewolfflix777.workers.dev";
+const $ = s => document.querySelector(s);
+let currentProfile = null;
+
+function show(id){
+  ["#loadingView","#loginView","#joinView","#pendingView","#blockedView","#dashboardView"].forEach(sel=>{
+    const el=$(sel); if(el) el.hidden = sel !== id;
+  });
+}
+function esc(value=""){
+  return String(value).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+}
+function initials(name="XX"){
+  const v=String(name).trim().split(/\s+/).slice(0,2).map(x=>x[0]?.toUpperCase()||"").join("");
+  return v || "XX";
+}
+function when(value){
+  if(!value) return "";
+  const normalized=String(value).includes("T") ? value : String(value).replace(" ","T")+"Z";
+  const time=Date.parse(normalized);
+  if(!Number.isFinite(time)) return value;
+  const mins=Math.max(1,Math.round((Date.now()-time)/60000));
+  if(mins<60) return mins+"m ago";
+  const hrs=Math.round(mins/60);
+  if(hrs<48) return hrs+"h ago";
+  return Math.round(hrs/24)+"d ago";
+}
+
+async function api(path, options={}){
+  const response = await fetch(API + path, {
+    ...options,
+    credentials: "include",
+    headers: {
+      "Accept":"application/json",
+      ...(options.headers || {})
+    }
+  });
+  let data={};
+  try{ data=await response.json(); }catch{}
+  if(!response.ok){
+    const err=new Error(data.error || "Request failed.");
+    err.status=response.status;
+    err.data=data;
+    throw err;
+  }
+  return data;
+}
+
+async function start(){
+  show("#loadingView");
+  try{
+    const data=await api("/me");
+    if(!data.member && data.status==="not_registered"){ show("#joinView"); return; }
+    if(data.status==="pending"){ show("#pendingView"); return; }
+    if(data.status!=="approved"){
+      $("#blockedText").textContent=data.message || "Your Circle membership is not currently active.";
+      show("#blockedView"); return;
+    }
+    currentProfile=data.profile;
+    openDashboard();
+  }catch(error){
+    // A GitHub Pages page cannot read the Worker until the Worker explicitly
+    // permits this origin. If Access/CORS blocks the call, present sign-in.
+    if(error.status===401 || error.status===403 || error instanceof TypeError){
+      show("#loginView");
+      return;
+    }
+    $("#blockedText").textContent=error.message;
+    show("#blockedView");
+  }
+}
+
+async function openDashboard(){
+  const p=currentProfile || {};
+  $("#memberName").textContent=p.displayName || "Member";
+  $("#profileName").textContent=p.displayName || "Member";
+  $("#memberAvatar").textContent=initials(p.displayName);
+  $("#memberRole").textContent=p.role==="admin" ? "Founder / Admin" : "Approved member";
+  $("#profileState").textContent=p.state || "State hidden";
+  $("#logoutBtn").hidden=false;
+  show("#dashboardView");
+  await loadFeed();
+  if(p.role==="admin"){
+    $("#adminPanel").hidden=false;
+    await loadAdmin();
+  }
+}
+
+$("#postBody").addEventListener("input", e => $("#postCount").textContent=e.target.value.length);
+
+$("#publishBtn").addEventListener("click", async ()=>{
+  const body=$("#postBody").value.trim();
+  const status=$("#postStatus");
+  if(!body){status.textContent="Write something first.";return;}
+  status.textContent="Publishing…";
+  try{
+    await api("/posts",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({body})
+    });
+    $("#postBody").value="";
+    $("#postCount").textContent="0";
+    status.textContent="Published.";
+    await loadFeed();
+  }catch(error){status.textContent=error.message;}
+});
+
+async function loadFeed(){
+  const status=$("#feedStatus"), feed=$("#feed");
+  status.textContent="Loading private posts…";
+  try{
+    const data=await api("/feed");
+    if(!data.posts?.length){
+      feed.innerHTML='<div class="circle-panel circle-empty">No posts yet. Start the conversation.</div>';
+      status.textContent="";
+      return;
+    }
+    feed.innerHTML=data.posts.map(post=>`
+      <article class="circle-post">
+        <div class="post-head">
+          <div class="member-avatar">${esc(initials(post.author.displayName))}</div>
+          <div>
+            <strong>${esc(post.author.displayName)}</strong>
+            <small>${post.author.state?esc(post.author.state)+" · ":""}${post.author.role==="admin"?"Admin · ":""}${esc(when(post.createdAt))}</small>
+          </div>
+        </div>
+        <div class="post-copy">${esc(post.body)}</div>
+        <div class="post-tools">
+          ${post.canDelete?`<button class="text-action delete-post" data-id="${post.id}" type="button">Delete</button>`:""}
+        </div>
+        <div class="circle-comments">
+          ${(post.comments||[]).map(comment=>`
+            <div class="circle-comment-item">
+              <strong>${esc(comment.author.displayName)}</strong> ${esc(comment.body)}
+              <br><small>${esc(when(comment.createdAt))}</small>
+            </div>`).join("")}
+          <form class="circle-comment" data-post="${post.id}">
+            <textarea name="body" maxlength="2000" rows="2" required aria-label="Write a comment" placeholder="Write a comment…"></textarea>
+            <button class="btn pale" type="submit">Comment</button>
+          </form>
+        </div>
+      </article>
+    `).join("");
+    status.textContent=data.posts.length+" private "+(data.posts.length===1?"post":"posts")+".";
+    bindFeed();
+  }catch(error){status.textContent=error.message;}
+}
+
+function bindFeed(){
+  document.querySelectorAll(".circle-comment").forEach(form=>{
+    form.addEventListener("submit",async event=>{
+      event.preventDefault();
+      const body=new FormData(form).get("body").trim();
+      if(!body)return;
+      const button=form.querySelector("button");
+      button.disabled=true;
+      try{
+        await api("/comments",{
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({postId:Number(form.dataset.post),body})
+        });
+        await loadFeed();
+      }catch(error){alert(error.message);}
+      finally{button.disabled=false;}
+    });
+  });
+
+  document.querySelectorAll(".delete-post").forEach(button=>{
+    button.addEventListener("click",async()=>{
+      if(!confirm("Delete this Circle post?"))return;
+      try{
+        await api("/posts/"+button.dataset.id,{method:"DELETE"});
+        await loadFeed();
+      }catch(error){alert(error.message);}
+    });
+  });
+}
+
+$("#joinForm").addEventListener("submit",async event=>{
+  event.preventDefault();
+  const status=$("#joinStatus");
+  const fd=new FormData(event.currentTarget);
+  status.textContent="Submitting…";
+  try{
+    await api("/join",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        displayName:fd.get("displayName"),
+        state:fd.get("state"),
+        bio:fd.get("bio")
+      })
+    });
+    show("#pendingView");
+  }catch(error){status.textContent=error.message;}
+});
+
+async function loadAdmin(){
+  const status=$("#adminStatus"), wrap=$("#pendingApps");
+  status.textContent="Checking applications…";
+  try{
+    const data=await api("/admin/pending");
+    if(!data.applications?.length){
+      wrap.innerHTML='<div class="circle-side-item"><strong>No pending applications</strong><small>Your queue is clear.</small></div>';
+      status.textContent="";
+      return;
+    }
+    wrap.innerHTML=data.applications.map(app=>`
+      <div class="circle-admin-app">
+        <strong>${esc(app.display_name)}</strong>
+        <small>${esc(app.email)}${app.state?" · "+esc(app.state):""}</small>
+        <p>${esc(app.bio || "No bio provided.")}</p>
+        <div class="admin-buttons">
+          <button class="btn primary admin-review" data-action="approve" data-id="${app.id}" type="button">Approve</button>
+          <button class="btn pale admin-review" data-action="reject" data-id="${app.id}" type="button">Reject</button>
+        </div>
+      </div>
+    `).join("");
+    status.textContent=data.applications.length+" pending.";
+    document.querySelectorAll(".admin-review").forEach(button=>{
+      button.addEventListener("click",()=>reviewMember(button.dataset.id,button.dataset.action));
+    });
+  }catch(error){status.textContent=error.message;}
+}
+
+async function reviewMember(id,action){
+  try{
+    await api("/admin/"+action,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({id:Number(id)})
+    });
+    await loadAdmin();
+  }catch(error){alert(error.message);}
+}
+
+$("#retryBtn").addEventListener("click",start);
+$("#logoutBtn").addEventListener("click",()=>{
+  location.href="https://truewolfflix777.cloudflareaccess.com/cdn-cgi/access/logout";
+});
+
+start();
+</script>
 </body>
 </html>
