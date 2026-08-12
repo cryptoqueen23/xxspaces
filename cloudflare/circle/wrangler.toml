@@ -1,0 +1,20 @@
+name = "xxfem-circle-api"
+main = "worker.js"
+compatibility_date = "2026-08-12"
+keep_vars = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "xxfem-voices"
+database_id = "bbd36a9d-1091-4668-9f6a-92dc159f0749"
+
+[[r2_buckets]]
+binding = "PHOTOS"
+bucket_name = "xxfem-profile-photos"
+
+# TEAM_DOMAIN and POLICY_AUD are intentionally NOT declared here.
+# They already exist as variables on the deployed Worker (set via the
+# Cloudflare dashboard). keep_vars = true above tells `wrangler deploy`
+# to preserve dashboard-set vars/secrets that aren't listed in this file
+# instead of deleting them, so leaving this section out is safe.
+# Manage them in the Cloudflare dashboard, not in this file.
