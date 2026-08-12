@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#fff2f8">
+<meta name="description" content="XX Newswire: external news headlines organized around women, girls, private spaces, sports, medicine, detransition, policy and courts.">
+<title>XX Newswire | XXFem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<header class="topbar">
+  <a class="brand" href="index.html" aria-label="XXFem home"><span class="crown" aria-hidden="true">♛</span><span>XX♀</span></a>
+  <button class="menu" aria-expanded="false" aria-controls="nav" aria-label="Open menu"><span></span><span></span><span></span></button>
+  <nav id="nav" aria-label="Primary">
+    <a href="index.html#mission">Mission</a><a href="index.html#voices">XX Voices</a><a href="newswire.html" aria-current="page">XX Newswire</a><a href="index.html#watch">XX Watch</a><a href="index.html#story">Founder's Story</a><a class="circle-link" href="circle.html">XX♀ Circle</a>
+  </nav>
+</header>
+
+<main id="main">
+<section class="wire-hero">
+  <p class="kicker">Automatic external headlines</p>
+  <h1>XX Newswire</h1>
+  <p>What's being reported. <strong>Read the source. Make up your own mind.</strong></p>
+  <div class="wire-disclaimer"><strong>External feed:</strong> these items are pulled automatically from Google News RSS searches. They are not XXFem reporting, verification, or endorsements. Each card identifies the publisher and links to the source route.</div>
+</section>
+
+<section class="wire-page">
+  <div class="wire-toolbar">
+    <div class="wire-filters" id="wireFilters" aria-label="Filter Newswire by category">
+      <button type="button" class="wire-filter active" data-category="All">All</button>
+      <button type="button" class="wire-filter" data-category="Sports">Sports</button>
+      <button type="button" class="wire-filter" data-category="Private Spaces">Private Spaces</button>
+      <button type="button" class="wire-filter" data-category="Schools & Girls">Schools & Girls</button>
+      <button type="button" class="wire-filter" data-category="Medicine">Medicine</button>
+      <button type="button" class="wire-filter" data-category="Detransition">Detransition</button>
+      <button type="button" class="wire-filter" data-category="Law & Courts">Law & Courts</button>
+      <button type="button" class="wire-filter" data-category="Prisons & Shelters">Prisons & Shelters</button>
+      <button type="button" class="wire-filter" data-category="International">International</button>
+    </div>
+    <button type="button" class="btn pale" id="refreshWire">Refresh</button>
+  </div>
+  <div id="wireStatus" class="status" role="status" aria-live="polite">Loading Newswire…</div>
+  <div id="wireGrid" class="wire-grid"></div>
+</section>
+</main>
+
+<footer>
+  <div class="footer-brand"><span>♛</span><strong>XX♀</strong><small>Female. By Biology. Worth Protecting.</small></div>
+  <nav aria-label="Footer"><a href="index.html">Home</a><a href="index.html#voices">Voices</a><a href="newswire.html">Newswire</a><a href="circle.html">Circle</a></nav>
+  <p>© 2026 XXFem. External Newswire items belong to their respective publishers.</p>
+</footer>
+<script src="script.js"></script>
+<script src="newswire.js"></script>
+</body>
+</html>
